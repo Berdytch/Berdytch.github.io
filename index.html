@@ -1,14 +1,457 @@
 <!DOCTYPE html>
-<html>
-  <head><title>Berdytch Project 1</title></head>
-  <body>
-    <h1>
-      My name is jimmy the tubestake, you may also know me as...
-Tony bagels
-Joey bandana
-Franky meatballs
-Chris the burger
-Vinny carwash
-    </h1>
-  </body>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Berdytch — Neuro-designed Habit Systems</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&family=DM+Mono:wght@300;400&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      /* Palette from Spec Sheet */
+      --teal:         #1D9E75;
+      --indigo:       #121124;
+      --sunlight:     #FFBF1F;
+      --lilac:        #7F77DD;
+      --off-white:    #F9F9F7;
+      --soft-grey:    #F1EFE8;
+      --border:       #E5E3DB;
+      --text-main:    #2C2C2A;
+      --text-muted:   #5F5E5A;
+      
+      --font-sans:    'DM Sans', sans-serif;
+      --font-mono:    'DM Mono', monospace;
+      
+      --transition:   cubic-bezier(0.2, 1, 0.3, 1);
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background-color: var(--off-white);
+      color: var(--text-main);
+      font-family: var(--font-sans);
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+      overflow-x: hidden;
+    }
+
+    /* Typography */
+    h1, h2, h3 { 
+      font-weight: 700; 
+      letter-spacing: -0.04em; 
+      line-height: 1.1;
+      color: var(--indigo);
+    }
+
+    p { font-size: 1.1rem; color: var(--text-muted); }
+
+    /* Layout Components */
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 2rem;
+    }
+
+    /* Navigation */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      background: rgba(249, 249, 247, 0.85);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid transparent;
+      transition: all 0.4s var(--transition);
+    }
+    nav.scrolled {
+      padding: 0.8rem 0;
+      border-bottom-color: var(--border);
+    }
+    .nav-inner {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1.5rem 0;
+    }
+    .logo {
+      font-weight: 800;
+      font-size: 1.5rem;
+      color: var(--teal);
+      letter-spacing: -0.05em;
+      text-decoration: none;
+    }
+    .nav-links {
+      display: flex;
+      gap: 2.5rem;
+      align-items: center;
+    }
+    .nav-links a {
+      text-decoration: none;
+      color: var(--text-main);
+      font-size: 0.9rem;
+      font-weight: 500;
+      transition: color 0.3s;
+    }
+    .nav-links a:hover { color: var(--teal); }
+    
+    .btn-nav {
+      background: var(--teal);
+      color: white;
+      padding: 0.6rem 1.2rem;
+      border-radius: 6px;
+      font-size: 0.85rem;
+    }
+
+    /* Hero */
+    .hero {
+      padding: 12rem 0 8rem;
+      text-align: center;
+      background: radial-gradient(circle at 50% 100%, #EEF9F5 0%, var(--off-white) 60%);
+    }
+    .hero-tag {
+      font-family: var(--font-mono);
+      color: var(--teal);
+      font-size: 0.8rem;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      margin-bottom: 1.5rem;
+      display: inline-block;
+    }
+    .hero h1 {
+      font-size: clamp(3rem, 8vw, 5.5rem);
+      margin-bottom: 2rem;
+      max-width: 900px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+    .hero-actions {
+      display: flex;
+      gap: 1rem;
+      justify-content: center;
+      margin-top: 3rem;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      padding: 1rem 2rem;
+      border-radius: 6px;
+      font-weight: 600;
+      text-decoration: none;
+      transition: all 0.3s var(--transition);
+      cursor: pointer;
+      border: none;
+    }
+    .btn-primary {
+      background: var(--teal);
+      color: white;
+    }
+    .btn-primary:hover {
+      background: var(--indigo);
+      transform: translateY(-2px);
+    }
+    .btn-secondary {
+      background: transparent;
+      border: 1px solid var(--border);
+      color: var(--text-main);
+    }
+    .btn-secondary:hover {
+      background: var(--soft-grey);
+    }
+
+    /* Section Headers */
+    .section-head {
+      margin-bottom: 4rem;
+    }
+    .section-label {
+      font-size: 0.75rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.15em;
+      color: var(--text-muted);
+      margin-bottom: 1rem;
+      display: block;
+    }
+
+    /* Bento Grid / Usage Cards */
+    .bento-grid {
+      display: grid;
+      grid-template-columns: repeat(12, 1-fr);
+      gap: 1.5rem;
+      margin-bottom: 8rem;
+    }
+    .bento-card {
+      grid-column: span 4;
+      background: white;
+      padding: 2.5rem;
+      border-radius: 12px;
+      border: 1px solid var(--border);
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+    .bento-card.wide { grid-column: span 8; }
+    .bento-card.accent { background: var(--indigo); color: white; }
+    .bento-card.accent h3 { color: white; }
+    .bento-card.accent p { color: rgba(255,255,255,0.7); }
+
+    .pill {
+      display: inline-block;
+      padding: 4px 12px;
+      border-radius: 20px;
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      width: fit-content;
+    }
+
+    /* Specific Styles for Rewards & Insights */
+    .reward-pill { background: var(--sunlight); color: var(--indigo); }
+    .science-pill { background: var(--lilac); color: white; }
+    .system-pill { background: #D3D1C7; color: var(--text-main); }
+
+    /* Work Section */
+    .work-section { padding: 8rem 0; background: var(--soft-grey); }
+    .work-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 3rem;
+    }
+    .work-card {
+      position: relative;
+      background: white;
+      border-radius: 12px;
+      overflow: hidden;
+      border: 1px solid var(--border);
+    }
+    .work-img {
+      aspect-ratio: 4/3;
+      background: var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+    }
+    .work-img svg { width: 40%; opacity: 0.2; color: var(--teal); }
+    .work-content { padding: 2rem; }
+
+    /* Footer */
+    footer {
+      background: var(--indigo);
+      color: white;
+      padding: 6rem 0 3rem;
+    }
+    .footer-grid {
+      display: grid;
+      grid-template-columns: 2fr 1fr 1fr 1.5fr;
+      gap: 4rem;
+      padding-bottom: 4rem;
+      border-bottom: 1px solid rgba(255,255,255,0.1);
+    }
+    .footer-logo { font-size: 1.5rem; font-weight: 800; color: var(--teal); margin-bottom: 1.5rem; display: block; }
+    .footer-col h4 { margin-bottom: 1.5rem; font-size: 0.9rem; color: var(--sunlight); text-transform: uppercase; letter-spacing: 0.1em; }
+    .footer-col ul { list-style: none; }
+    .footer-col li { margin-bottom: 0.8rem; }
+    .footer-col a { color: rgba(255,255,255,0.6); text-decoration: none; transition: 0.3s; }
+    .footer-col a:hover { color: white; }
+
+    .subscribe-box {
+      display: flex;
+      gap: 0.5rem;
+      margin-top: 1rem;
+    }
+    .subscribe-box input {
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(255,255,255,0.1);
+      padding: 0.8rem;
+      border-radius: 6px;
+      color: white;
+      flex: 1;
+    }
+    .subscribe-btn {
+      background: var(--teal);
+      border: none;
+      color: white;
+      padding: 0.8rem 1.2rem;
+      border-radius: 6px;
+      font-weight: 600;
+    }
+
+    /* Animation Utilities */
+    .reveal { opacity: 0; transform: translateY(30px); transition: all 0.8s var(--transition); }
+    .reveal.visible { opacity: 1; transform: translateY(0); }
+
+    @media (max-width: 968px) {
+      .bento-card, .bento-card.wide { grid-column: span 12; }
+      .work-grid { grid-template-columns: 1fr; }
+      .footer-grid { grid-template-columns: 1fr 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+<nav id="navbar">
+  <div class="container nav-inner">
+    <a href="#" class="logo">Berdytch</a>
+    <div class="nav-links">
+      <a href="#systems">Systems</a>
+      <a href="#science">The Science</a>
+      <a href="#about">About</a>
+      <a href="#" class="btn btn-nav">Enter App</a>
+    </div>
+  </div>
+</nav>
+
+<section class="hero">
+  <div class="container">
+    <span class="hero-tag reveal">Science-backed habit formation</span>
+    <h1 class="reveal">Build habits that actually stick.</h1>
+    <p class="reveal">The neuro-designed interface that aligns your biology with your goals. No friction, just focus.</p>
+    <div class="hero-actions reveal">
+      <a href="#" class="btn btn-primary">Start your first study</a>
+      <a href="#" class="btn btn-secondary">How it works</a>
+    </div>
+  </div>
+</section>
+
+<section class="container" id="systems">
+  <div class="section-head reveal">
+    <span class="section-label">Interface Design</span>
+    <h2>Built for Cognitive Ease</h2>
+  </div>
+  
+  <div class="bento-grid">
+    <div class="bento-card wide reveal">
+      <span class="pill reward-pill">Reward Moment</span>
+      <h3>14-Day Streak Unlocked</h3>
+      <p>Using the Sunlight accent for celebrations only, triggering dopamine release through visual reward cues.</p>
+      <div style="margin-top:auto; font-family: var(--font-mono); font-size: 0.8rem; color: var(--teal);">NEURO-REWARD-01</div>
+    </div>
+    
+    <div class="bento-card reveal">
+      <span class="pill science-pill">Scientific Insight</span>
+      <h3>Prefrontal Cortex</h3>
+      <p>Purple is reserved for science content, tips, and insights to help you understand your brain.</p>
+    </div>
+
+    <div class="bento-card accent reveal">
+      <h3>Deep Focus Indigo</h3>
+      <p>High-contrast backgrounds for deep work sessions and low-distraction environments.</p>
+    </div>
+
+    <div class="bento-card wide reveal">
+      <span class="pill system-pill">Upcoming System</span>
+      <h3>Weekly Neural Review</h3>
+      <p>Review your progress every Sunday at 9am. Scheduled reviews reduce cognitive load and decision fatigue.</p>
+    </div>
+  </div>
+</section>
+
+<section class="work-section" id="science">
+  <div class="container">
+    <div class="section-head reveal">
+      <span class="section-label">Habit Architecture</span>
+      <h2>Designed by Berdytch</h2>
+    </div>
+
+    <div class="work-grid">
+      <div class="work-card reveal">
+        <div class="work-img">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </div>
+        <div class="work-content">
+          <span class="pill" style="background: var(--off-white); border: 1px solid var(--border); color: var(--text-muted);">Protocol</span>
+          <h3 style="margin: 1rem 0;">Visual Anchoring</h3>
+          <p>Utilizing Teal for primary actions to guide user attention through the habit stack seamlessly.</p>
+        </div>
+      </div>
+
+      <div class="work-card reveal">
+        <div class="work-img">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </div>
+        <div class="work-content">
+          <span class="pill" style="background: var(--off-white); border: 1px solid var(--border); color: var(--text-muted);">Methodology</span>
+          <h3 style="margin: 1rem 0;">Time-Blocking 2.0</h3>
+          <p>A fluid scheduling system that adjusts to your energy peaks and troughs throughout the day.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-col">
+        <span class="footer-logo">Berdytch</span>
+        <p style="color: rgba(255,255,255,0.5); font-size: 0.9rem;">Building the future of personal operating systems through behavioral science.</p>
+      </div>
+      <div class="footer-col">
+        <h4>Product</h4>
+        <ul>
+          <li><a href="#">The App</a></li>
+          <li><a href="#">Methodology</a></li>
+          <li><a href="#">Science</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Studio</h4>
+        <ul>
+          <li><a href="#">Case Studies</a></li>
+          <li><a href="#">Journal</a></li>
+          <li><a href="#">Terms</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Stay Updated</h4>
+        <div class="subscribe-box">
+          <input type="email" placeholder="Email address" />
+          <button class="subscribe-btn">→</button>
+        </div>
+      </div>
+    </div>
+    <div style="padding-top: 3rem; font-size: 0.8rem; color: rgba(255,255,255,0.3); display: flex; justify-content: space-between;">
+      <span>© 2026 Berdytch. Neuro-designed in Helsinki.</span>
+      <div style="display: flex; gap: 2rem;">
+        <a href="#" style="color: inherit; text-decoration: none;">Privacy</a>
+        <a href="#" style="color: inherit; text-decoration: none;">Accessibility</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script>
+  // Scroll reveal
+  const reveals = document.querySelectorAll('.reveal');
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.1, rootMargin: '0px 0px -60px 0px' });
+  reveals.forEach(el => observer.observe(el));
+
+  // Nav shrink on scroll
+  window.addEventListener('scroll', () => {
+    const nav = document.getElementById('navbar');
+    if (window.scrollY > 50) {
+      nav.classList.add('scrolled');
+    } else {
+      nav.classList.remove('scrolled');
+    }
+  });
+
+  // Staggering bento cards
+  document.querySelectorAll('.bento-card').forEach((card, i) => {
+    card.style.transitionDelay = `${i * 0.1}s`;
+  });
+</script>
+
+</body>
 </html>
