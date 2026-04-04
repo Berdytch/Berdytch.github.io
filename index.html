@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Berdytch — Neuro-designed Habit Systems</title>
+  <title>Berdytch — Neuro-designed app for your Goals</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&family=DM+Mono:wght@300;400&display=swap" rel="stylesheet" />
   <style>
@@ -46,13 +46,16 @@
       color: var(--indigo);
     }
 
-    p { font-size: 1.1rem; color: var(--text-muted); }
+    /* Fluid Typography Additions */
+    h2 { font-size: clamp(2rem, 5vw, 3rem); }
+    h3 { font-size: clamp(1.25rem, 3vw, 1.75rem); }
+    p { font-size: clamp(1rem, 2vw, 1.1rem); color: var(--text-muted); }
 
     /* Layout Components */
     .container {
       max-width: 1200px;
       margin: 0 auto;
-      padding: 0 2rem;
+      padding: 0 clamp(1.25rem, 5vw, 2rem);
     }
 
     /* Navigation */
@@ -74,6 +77,8 @@
       justify-content: space-between;
       align-items: center;
       padding: 1.5rem 0;
+      position: relative;
+      z-index: 102;
     }
     .logo {
       font-weight: 800;
@@ -102,6 +107,26 @@
       padding: 0.6rem 1.2rem;
       border-radius: 6px;
       font-size: 0.85rem;
+    }
+
+    /* Hamburger Menu */
+    .hamburger {
+      display: none;
+      flex-direction: column;
+      gap: 6px;
+      background: transparent;
+      border: none;
+      cursor: pointer;
+      z-index: 103;
+      padding: 0.5rem;
+    }
+    .hamburger span {
+      display: block;
+      width: 24px;
+      height: 2px;
+      background-color: var(--indigo);
+      transition: all 0.3s var(--transition);
+      border-radius: 2px;
     }
 
     /* Hero */
@@ -136,6 +161,7 @@
     .btn {
       display: inline-flex;
       align-items: center;
+      justify-content: center;
       padding: 1rem 2rem;
       border-radius: 6px;
       font-weight: 600;
@@ -178,14 +204,14 @@
     /* Bento Grid / Usage Cards */
     .bento-grid {
       display: grid;
-      grid-template-columns: repeat(12, 1-fr);
+      grid-template-columns: repeat(12, 1fr);
       gap: 1.5rem;
       margin-bottom: 8rem;
     }
     .bento-card {
       grid-column: span 4;
       background: white;
-      padding: 2.5rem;
+      padding: clamp(1.5rem, 4vw, 2.5rem);
       border-radius: 12px;
       border: 1px solid var(--border);
       display: flex;
@@ -214,11 +240,11 @@
     .system-pill { background: #D3D1C7; color: var(--text-main); }
 
     /* Work Section */
-    .work-section { padding: 8rem 0; background: var(--soft-grey); }
+    .work-section { padding: clamp(4rem, 8vw, 8rem) 0; background: var(--soft-grey); }
     .work-grid {
       display: grid;
       grid-template-columns: 1fr 1fr;
-      gap: 3rem;
+      gap: clamp(1.5rem, 4vw, 3rem);
     }
     .work-card {
       position: relative;
@@ -236,18 +262,18 @@
       overflow: hidden;
     }
     .work-img svg { width: 40%; opacity: 0.2; color: var(--teal); }
-    .work-content { padding: 2rem; }
+    .work-content { padding: clamp(1.5rem, 4vw, 2rem); }
 
     /* Footer */
     footer {
       background: var(--indigo);
       color: white;
-      padding: 6rem 0 3rem;
+      padding: clamp(4rem, 8vw, 6rem) 0 3rem;
     }
     .footer-grid {
       display: grid;
       grid-template-columns: 2fr 1fr 1fr 1.5fr;
-      gap: 4rem;
+      gap: clamp(2rem, 5vw, 4rem);
       padding-bottom: 4rem;
       border-bottom: 1px solid rgba(255,255,255,0.1);
     }
@@ -270,6 +296,7 @@
       border-radius: 6px;
       color: white;
       flex: 1;
+      width: 100%;
     }
     .subscribe-btn {
       background: var(--teal);
@@ -279,15 +306,82 @@
       border-radius: 6px;
       font-weight: 600;
     }
+    
+    .footer-bottom {
+      padding-top: 3rem; 
+      font-size: 0.8rem; 
+      color: rgba(255,255,255,0.3); 
+      display: flex; 
+      justify-content: space-between;
+      align-items: center;
+    }
+    .footer-bottom-links {
+      display: flex; 
+      gap: 2rem;
+    }
+    .footer-bottom-links a {
+      color: inherit; 
+      text-decoration: none;
+    }
 
     /* Animation Utilities */
     .reveal { opacity: 0; transform: translateY(30px); transition: all 0.8s var(--transition); }
     .reveal.visible { opacity: 1; transform: translateY(0); }
 
+    /* Responsive Adjustments */
     @media (max-width: 968px) {
       .bento-card, .bento-card.wide { grid-column: span 12; }
       .work-grid { grid-template-columns: 1fr; }
       .footer-grid { grid-template-columns: 1fr 1fr; }
+    }
+
+    @media (max-width: 768px) {
+      /* Mobile Nav Setup */
+      .hamburger { display: flex; }
+      .nav-links {
+        position: fixed;
+        top: 0; left: 0; right: 0; bottom: 0;
+        height: 100vh;
+        background: var(--off-white);
+        flex-direction: column;
+        justify-content: center;
+        gap: 2rem;
+        transform: translateY(-100%);
+        opacity: 0;
+        visibility: hidden;
+        transition: all 0.4s var(--transition);
+        z-index: 101;
+      }
+      .nav-links.active {
+        transform: translateY(0);
+        opacity: 1;
+        visibility: visible;
+      }
+      .nav-links a:not(.btn-nav) {
+        font-size: 1.25rem;
+      }
+      .hamburger.active span:nth-child(1) { transform: translateY(8px) rotate(45deg); }
+      .hamburger.active span:nth-child(2) { opacity: 0; }
+      .hamburger.active span:nth-child(3) { transform: translateY(-8px) rotate(-45deg); }
+
+      /* Section Stacking & Spacing */
+      .hero { padding: 8rem 0 4rem; }
+      .hero-actions { 
+        flex-direction: column; 
+        width: 100%; 
+      }
+      .hero-actions .btn { width: 100%; }
+      .bento-grid { margin-bottom: 4rem; }
+      
+      .footer-grid { grid-template-columns: 1fr; gap: 2.5rem; padding-bottom: 2.5rem; }
+      .subscribe-box { flex-direction: column; }
+      .subscribe-btn { width: 100%; }
+      
+      .footer-bottom {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 1.25rem;
+      }
     }
   </style>
 </head>
@@ -296,7 +390,12 @@
 <nav id="navbar">
   <div class="container nav-inner">
     <a href="#" class="logo">Berdytch</a>
-    <div class="nav-links">
+    <button class="hamburger" aria-label="Toggle menu" id="hamburger">
+      <span></span>
+      <span></span>
+      <span></span>
+    </button>
+    <div class="nav-links" id="nav-links">
       <a href="#systems">Systems</a>
       <a href="#science">The Science</a>
       <a href="#about">About</a>
@@ -307,7 +406,7 @@
 
 <section class="hero">
   <div class="container">
-    <span class="hero-tag reveal">Science-backed habit formation</span>
+    <span class="hero-tag reveal">Science-backed goal acheivement</span>
     <h1 class="reveal">Build habits that actually stick.</h1>
     <p class="reveal">The neuro-designed interface that aligns your biology with your goals. No friction, just focus.</p>
     <div class="hero-actions reveal">
@@ -414,17 +513,36 @@
         </div>
       </div>
     </div>
-    <div style="padding-top: 3rem; font-size: 0.8rem; color: rgba(255,255,255,0.3); display: flex; justify-content: space-between;">
-      <span>© 2026 Berdytch. Neuro-designed in Helsinki.</span>
-      <div style="display: flex; gap: 2rem;">
-        <a href="#" style="color: inherit; text-decoration: none;">Privacy</a>
-        <a href="#" style="color: inherit; text-decoration: none;">Accessibility</a>
+    <div class="footer-bottom">
+      <span>© 2026 Berdytch. Neuro-designed in Sydney.</span>
+      <div class="footer-bottom-links">
+        <a href="#">Privacy</a>
+        <a href="#">Accessibility</a>
       </div>
     </div>
   </div>
 </footer>
 
 <script>
+  // Mobile Hamburger Menu
+  const hamburger = document.getElementById('hamburger');
+  const navLinks = document.getElementById('nav-links');
+  const navItems = document.querySelectorAll('.nav-links a');
+
+  hamburger.addEventListener('click', () => {
+    hamburger.classList.toggle('active');
+    navLinks.classList.toggle('active');
+    document.body.style.overflow = navLinks.classList.contains('active') ? 'hidden' : '';
+  });
+
+  navItems.forEach(item => {
+    item.addEventListener('click', () => {
+      hamburger.classList.remove('active');
+      navLinks.classList.remove('active');
+      document.body.style.overflow = '';
+    });
+  });
+
   // Scroll reveal
   const reveals = document.querySelectorAll('.reveal');
   const observer = new IntersectionObserver((entries) => {
@@ -455,3 +573,4 @@
 
 </body>
 </html>
+
