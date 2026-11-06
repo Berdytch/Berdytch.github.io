@@ -6,27 +6,37 @@
 <title>Japan · January 2027 · 3D Trip Map</title>
 <link href="https://fonts.googleapis.com/css2?family=Shippori+Mincho:wght@500;700&display=swap" rel="stylesheet">
 <style>
-:root{--paper:#f6efe2;--ink:#1d2540;--muted:#6b6f85;--red:#c8102e;--card:rgba(246,239,226,.94);--line:rgba(29,37,64,.15);box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
-@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--paper:#1a1f33;--ink:#f3ead8;--muted:#a3a8c0;--card:rgba(26,31,51,.93);--line:rgba(243,234,216,.16)}}
-:root[data-theme="dark"]{--paper:#1a1f33;--ink:#f3ead8;--muted:#a3a8c0;--card:rgba(26,31,51,.93);--line:rgba(243,234,216,.16)}
-html,body{height:100%;margin:0;background:#0f1a3a;color:var(--ink);font-family:"Shippori Mincho",Georgia,"Times New Roman",serif;overflow:hidden}
-#sun{position:fixed;right:12%;top:8%;width:min(24vw,200px);aspect-ratio:1;border-radius:50%;background:#c8102e;opacity:.85;box-shadow:0 0 90px #c8102e88}
-#bg{position:fixed;inset:0;background:radial-gradient(ellipse at 70% 0%,#2b3a78 0,#16224d 45%,#0b1230 100%)}
+:root{--paper:#f6efe2;--ink:#1d2540;--muted:#5d6178;--red:#c8102e;--card:rgba(246,239,226,.96);--line:rgba(29,37,64,.18);--sb:env(safe-area-inset-bottom,0px);--st:env(safe-area-inset-top,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--paper:#1a1f33;--ink:#f3ead8;--muted:#a9aec6;--card:rgba(26,31,51,.95);--line:rgba(243,234,216,.2)}}
+:root[data-theme="dark"]{--paper:#1a1f33;--ink:#f3ead8;--muted:#a9aec6;--card:rgba(26,31,51,.95);--line:rgba(243,234,216,.2)}
+*{box-sizing:border-box}
+html,body{height:100%;margin:0;background:#0f1a3a;color:var(--ink);font-family:"Shippori Mincho",Georgia,"Times New Roman",serif;overflow:hidden;-webkit-tap-highlight-color:transparent}
+#bg{position:fixed;inset:0;background:radial-gradient(ellipse at 75% 0%,#34478f 0,#16224d 50%,#0b1230 100%)}
+#sun{position:fixed;right:10%;top:6%;width:min(22vw,180px);aspect-ratio:1;border-radius:50%;background:#c8102e;opacity:.8;box-shadow:0 0 90px #c8102e88}
 canvas{position:fixed;inset:0;width:100%;height:100%;touch-action:none;cursor:grab}
-canvas:active{cursor:grabbing}
-.lbl{position:fixed;left:0;top:0;pointer-events:none;transform:translate(-50%,-130%);text-align:center;color:#fff;text-shadow:0 1px 6px #000c;white-space:nowrap;will-change:transform}
-.lbl b{display:block;font-size:15px;letter-spacing:.04em}.lbl i{font-style:normal;font-size:11px;opacity:.85}
-.lbl span{display:inline-block;background:var(--red);color:#fff;font-size:10px;padding:1px 6px;border-radius:9px;margin-bottom:2px;text-shadow:none}
-header{z-index:10;position:fixed;left:16px;top:calc(12px + env(safe-area-inset-top,0px));color:#fff;text-shadow:0 2px 10px #000a;pointer-events:none}
+.lbl{position:fixed;left:0;top:0;z-index:2;pointer-events:none;text-align:center;color:#fff;text-shadow:0 1px 6px #000,0 0 3px #000;white-space:nowrap;will-change:transform}
+.lbl b{display:block;font-size:15px;letter-spacing:.04em}
+.lbl span{display:inline-block;background:var(--red);color:#fff;font-size:10px;padding:1px 7px;border-radius:9px;margin-bottom:2px;text-shadow:none}
+.lbl.sea{font-style:italic;font-size:12px;opacity:.5;letter-spacing:.2em}
+header{position:fixed;z-index:10;left:16px;top:calc(12px + var(--st));color:#fff;text-shadow:0 2px 10px #000a;pointer-events:none}
 header h1{margin:0;font-size:clamp(20px,3.4vw,32px);letter-spacing:.06em}
 header p{margin:2px 0 0;font-size:13px;opacity:.85}
-aside{z-index:10;position:fixed;right:14px;top:50%;transform:translateY(-50%);width:300px;max-height:78vh;overflow:auto;background:var(--card);border:1px solid var(--line);border-radius:14px;padding:10px;backdrop-filter:blur(8px)}
-.st{display:flex;gap:10px;padding:10px;border-radius:10px;cursor:pointer;border:0;background:none;width:100%;text-align:left;color:var(--ink);font:inherit}
-.st:hover,.st.on{background:rgba(200,16,46,.12)}
+aside{position:fixed;z-index:10;right:14px;top:50%;transform:translateY(-50%);width:310px;max-height:80vh;overflow:auto;background:var(--card);border:1px solid var(--line);border-radius:14px;padding:8px;backdrop-filter:blur(8px)}
+.st{display:flex;gap:10px;padding:10px;border-radius:10px;cursor:pointer;border:1px solid transparent;background:none;width:100%;text-align:left;color:var(--ink);font:inherit}
+.st:hover,.st.on{background:rgba(200,16,46,.13);border-color:rgba(200,16,46,.35)}
 .n{flex:none;width:26px;height:26px;border-radius:50%;background:var(--red);color:#fff;display:grid;place-items:center;font-size:13px}
-.st h3{margin:0;font-size:15px}.st small{color:var(--muted);display:block;font-size:12px;line-height:1.35;margin-top:2px}
-.hint{z-index:10;position:fixed;left:16px;bottom:calc(14px + env(safe-area-inset-bottom,0px));color:#fff;font-size:12px;opacity:.75;text-shadow:0 1px 4px #000}
-@media (max-width:700px){aside{top:auto;bottom:0;right:0;left:0;width:auto;transform:none;max-height:34vh;border-radius:14px 14px 0 0;padding-bottom:calc(10px + env(safe-area-inset-bottom,0px))}.hint{display:none}.lbl b{font-size:12px}}
+.st h3{margin:0;font-size:15px}.st small{color:var(--muted);display:block;font-size:12.5px;line-height:1.35;margin-top:2px}
+.hint{position:fixed;z-index:10;left:16px;bottom:calc(14px + var(--sb));color:#fff;font-size:12px;opacity:.75;text-shadow:0 1px 4px #000}
+#load{position:fixed;inset:0;z-index:20;display:grid;place-items:center;color:#fff;background:#0b1230;font-size:18px;letter-spacing:.2em;transition:opacity .6s}
+@media (max-width:700px){
+header p{font-size:11px}
+aside{top:auto;bottom:0;left:0;right:0;width:auto;max-height:none;transform:none;display:flex;gap:8px;overflow-x:auto;scroll-snap-type:x mandatory;border-radius:16px 16px 0 0;padding:10px 10px calc(10px + var(--sb));-webkit-overflow-scrolling:touch}
+.st{flex:0 0 76vw;scroll-snap-align:center;border-color:var(--line);min-height:84px}
+.st small{font-size:12px}
+.hint{display:none}
+.lbl b{font-size:12px}.lbl span{font-size:9px;padding:0 5px}.lbl.sea{font-size:10px}
+#sun{top:10%}
+}
 </style>
 </head>
 <body>
@@ -34,136 +44,187 @@ aside{z-index:10;position:fixed;right:14px;top:50%;transform:translateY(-50%);wi
 <header><h1>日本 · Japan 2027</h1><p>18 Jan – early Feb · Osaka → Hiroshima → Kyoto → Tokyo</p></header>
 <aside id="list"></aside>
 <div class="hint">Drag to rotate · scroll/pinch to zoom · tap a stop to fly there</div>
+<div id="load">日本 · loading</div>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
 <script>
-const T=THREE,K=2,LX=137,LZ=37;
-const P=(lon,lat,y=0)=>new T.Vector3((lon-LX)*K,y,-(lat-LZ)*K*1.22);
+const T=THREE,K=2,LX=137,LZ=37,LK=1.22;
+const P=(lon,lat,y=0)=>new T.Vector3((lon-LX)*K,y,-(lat-LZ)*K*LK);
 const renderer=new T.WebGLRenderer({antialias:true,alpha:true});
 renderer.setPixelRatio(Math.min(devicePixelRatio,2));
 document.body.appendChild(renderer.domElement);
 const scene=new T.Scene();
-const cam=new T.PerspectiveCamera(45,1,.1,300);
-scene.add(new T.HemisphereLight(0xfff3e0,0x1b2a5c,.9));
-const sunL=new T.DirectionalLight(0xffe2c0,.9);sunL.position.set(-10,20,10);scene.add(sunL);
+const cam=new T.PerspectiveCamera(45,1,.1,400);
+scene.add(new T.HemisphereLight(0xfff3e0,0x2a3f78,.75));
+const sunL=new T.DirectionalLight(0xffe6c8,.95);sunL.position.set(-18,14,10);scene.add(sunL);
 
-// sea
-const sea=new T.Mesh(new T.CircleGeometry(80,64).rotateX(-Math.PI/2),new T.MeshLambertMaterial({color:0x1d3b7a,transparent:true,opacity:.85}));
-sea.position.y=-.45;scene.add(sea);
-const grid=new T.GridHelper(120,60,0x4b66b0,0x2c448a);grid.position.y=-.44;grid.material.transparent=true;grid.material.opacity=.25;scene.add(grid);
-
-// islands
-const isl={
-honshu:[[130.9,34],[131.8,34.4],[132.5,35.4],[133.2,35.5],[134.3,35.6],[135.3,35.6],[135.9,35.5],[136,36],[136.7,37.3],[137.3,37.5],[137,36.8],[138.3,37],[139,37.9],[139.9,39.5],[140,40.5],[140,41.2],[140.9,41.4],[141.4,41.4],[141.5,40.3],[142,39.5],[141.5,38.3],[141,37],[140.8,36],[140.8,35.7],[140.3,35.2],[139.8,35],[139.8,35.3],[139.6,35.3],[139.2,34.9],[138.8,34.6],[138.2,34.6],[137.2,34.6],[136.9,34.7],[136.9,34.3],[136.3,34.2],[135.8,33.5],[135.1,33.8],[135.1,34.4],[134.7,34.7],[133.5,34.4],[132.4,34.2],[131.5,33.9]],
-kyushu:[[130.9,33.9],[131.7,33.6],[131.9,32.8],[131.5,31.4],[130.7,31],[130.2,31.3],[130.2,32.6],[130,33.2],[129.8,33.5],[130.4,33.7]],
-shikoku:[[132.4,33.9],[133.7,34.3],[134.6,34.2],[134.2,33.5],[133.5,33.4],[132.7,32.9]],
-hokkaido:[[140,41.5],[140.4,42.6],[140.4,43.3],[141.4,43.2],[141.8,44.5],[142,45.4],[142.9,44.3],[143.9,44.2],[145.3,43.4],[144.3,43],[143.3,42],[142,42.5],[141,42.6]]};
-const landMat=new T.MeshLambertMaterial({color:0xefe4cc}),edgeMat=new T.LineBasicMaterial({color:0xc8102e});
-for(const k in isl){
-  const s=new T.Shape(isl[k].map(([lo,la])=>new T.Vector2((lo-LX)*K,(la-LZ)*K*1.22)));
-  const g=new T.ExtrudeGeometry(s,{depth:.5,bevelEnabled:true,bevelSize:.08,bevelThickness:.06,bevelSegments:2}).rotateX(-Math.PI/2);
-  g.translate(0,-.45,0);
-  const m=new T.Mesh(g,landMat);scene.add(m);
-  const e=new T.LineSegments(new T.EdgesGeometry(g,60),edgeMat);scene.add(e);
+// ---- coastlines (lon,lat) ----
+const polys=[
+[[130.93,33.96],[131.4,34.4],[131.85,34.67],[132.07,34.9],[132.7,35.4],[133.0,35.5],[133.3,35.45],[134.2,35.55],[134.6,35.65],[135.2,35.75],[135.3,35.65],[135.75,35.5],[136.05,35.65],[136.1,36.2],[136.6,36.65],[136.7,37.05],[137.0,37.4],[137.35,37.5],[137.1,37.0],[137.2,36.75],[137.7,36.9],[138.2,37.2],[138.9,37.75],[139.05,37.95],[139.5,38.4],[139.8,38.75],[139.9,39.3],[140.0,39.7],[139.7,39.95],[140.0,40.2],[140.3,40.8],[140.3,41.2],[140.5,41.2],[141.2,41.4],[141.4,41.45],[140.9,41.5],[140.75,40.85],[141.2,41.1],[141.4,41.25],[141.45,40.6],[141.5,40.5],[141.8,40.2],[142.0,39.65],[141.9,39.3],[141.75,39.0],[141.6,38.9],[141.5,38.3],[141.0,38.25],[141.0,37.8],[141.0,37.0],[140.65,36.5],[140.85,35.7],[140.4,35.15],[139.88,34.9],[139.85,35.0],[139.8,35.3],[140.0,35.6],[139.65,35.45],[139.65,35.15],[139.5,35.2],[139.15,35.25],[139.1,34.9],[138.85,34.6],[138.75,34.9],[138.85,35.1],[138.5,34.95],[138.2,34.6],[137.7,34.65],[137.0,34.6],[136.9,34.85],[136.65,34.7],[136.5,34.7],[136.9,34.3],[136.4,34.2],[136.1,34.0],[135.75,33.45],[135.35,33.7],[135.15,33.9],[135.1,34.2],[135.15,34.25],[135.4,34.55],[135.4,34.65],[135.2,34.68],[134.7,34.75],[133.95,34.6],[133.4,34.45],[132.45,34.35],[132.2,34.15],[132.1,33.95],[131.8,34.0],[131.3,33.95]],
+[[130.95,33.95],[131.5,33.65],[131.7,33.25],[131.9,32.9],[131.85,32.4],[131.45,31.9],[131.35,31.4],[131.0,31.3],[130.7,31.0],[130.75,31.4],[130.65,31.7],[130.5,31.4],[130.2,31.25],[130.2,31.8],[130.3,32.3],[130.4,32.7],[130.2,33.0],[129.85,32.7],[129.75,33.2],[129.85,33.6],[130.3,33.6],[130.8,33.9]],
+[[132.0,33.35],[132.45,33.5],[132.7,33.95],[133.0,34.1],[133.3,34.05],[134.05,34.35],[134.6,34.2],[134.65,33.85],[134.3,33.6],[134.18,33.25],[133.55,33.5],[133.0,32.72],[132.7,32.95],[132.5,33.25]],
+[[140.05,41.45],[140.15,42.2],[139.95,42.7],[140.35,43.3],[141.0,43.2],[141.35,43.2],[141.65,43.95],[141.7,45.4],[141.95,45.5],[142.8,44.7],[144.25,44.0],[145.3,44.35],[144.9,43.6],[145.8,43.35],[145.2,43.1],[144.4,42.95],[143.25,42.0],[141.6,42.65],[141.0,42.3],[140.7,42.55],[140.75,41.8],[140.4,41.55]],
+[[134.95,34.6],[135.0,34.3],[134.75,34.2],[134.85,34.5]],
+[[138.2,38.3],[138.55,38.3],[138.5,37.8],[138.25,37.8]]];
+const pip=(x,y,p)=>{let c=false;for(let i=0,j=p.length-1;i<p.length;j=i++){const a=p[i],b=p[j];if((a[1]>y)!=(b[1]>y)&&x<(b[0]-a[0])*(y-a[1])/(b[1]-a[1])+a[0])c=!c}return c};
+// mountains: lon,lat,height,sigma
+const MT=[[137.65,36.3,3.2,.32],[137.8,35.8,2.7,.28],[138.2,35.5,3,.28],[138.73,35.36,3.4,.11],[138.9,35.9,2.2,.28],[139.5,36.8,2.1,.4],[139.0,37.0,1.9,.4],[140.7,39,1.6,.4],[140.8,38,1.5,.4],[140.8,40.2,1.4,.4],[142.9,43.6,2.2,.5],[142,42.9,1.5,.5],[143,42.6,1.6,.3],[135.8,34,1.6,.4],[133.4,33.8,1.7,.5],[131.1,32.9,1.6,.3],[131.2,32.2,1.5,.35],[133,35.2,1,.6],[135.4,35.2,.7,.3],[136.6,35.8,1.2,.3],[138.1,38.1,1,.2]];
+const NX=300,NZ=270,L0=129.3,L1=146.2,B0=30.6,B1=45.8;
+const mask=new Float32Array(NX*NZ);
+const lonAt=i=>L0+i/(NX-1)*(L1-L0),latAt=j=>B1-j/(NZ-1)*(B1-B0);
+for(let j=0;j<NZ;j++)for(let i=0;i<NX;i++){const lo=lonAt(i),la=latAt(j);mask[j*NX+i]=polys.some(p=>pip(lo,la,p))?1:0}
+function blur(a,r){const o=new Float32Array(a.length);for(let j=0;j<NZ;j++)for(let i=0;i<NX;i++){let s=0,n=0;for(let y=-r;y<=r;y++){const jj=j+y;if(jj<0||jj>=NZ)continue;for(let x=-r;x<=r;x++){const ii=i+x;if(ii<0||ii>=NX)continue;s+=a[jj*NX+ii];n++}}o[j*NX+i]=s/n}return o}
+let sm=blur(blur(blur(mask,2),2),2);
+const noise=(x,y)=>Math.sin(x*3.1+Math.cos(y*2.7)*2)*.5+Math.sin(x*7.3+y*5.1)*.3+Math.sin(x*15.7-y*13.3)*.2;
+const cl=(v,a,b)=>Math.min(b,Math.max(a,v)),mix=(a,b,t)=>new T.Color(a).lerp(new T.Color(b),t);
+const geo=new T.PlaneGeometry(1,1,NX-1,NZ-1);
+const pos=geo.attributes.position,col=new Float32Array(NX*NZ*3);
+for(let j=0;j<NZ;j++)for(let i=0;i<NX;i++){
+  const k=j*NX+i,lo=lonAt(i),la=latAt(j),s=sm[k];let h,c;
+  if(mask[k]){
+    let m=0;for(const[a,b,H,sg]of MT){const d=((lo-a)**2+((la-b)*1.1)**2)/(2*sg*sg);if(d<9)m+=H*Math.exp(-d)}
+    const t=cl((s-.5)*3,0,1);
+    h=.05+t*(m*.36*(.8+.45*noise(lo,la))+.04*noise(lo*3,la*3)+.03);
+    const sn=.5+(la<36?.15:0)-(la-35)*.012;
+    c=h<.1?mix(0xa9b97a,0x6e9b5c,(h-.04)/.06):h<.3?mix(0x6e9b5c,0x4a7a4a,(h-.1)/.2):h<sn?mix(0x4a7a4a,0x8e8a78,(h-.3)/(sn-.3)):mix(0x8e8a78,0xf6f8fc,cl((h-sn)/.12,0,1));
+  }else{h=-.05-.55*(1-cl(s*2,0,1));c=mix(0x4aa0b8,0x1b4a85,cl(-h/.5,0,1))}
+  pos.setXYZ(k,(lo-LX)*K,h,-(la-LZ)*K*LK);col.set([c.r,c.g,c.b],k*3);
 }
-// greenish highland patch (Japanese Alps feel)
-for(const [lo,la,s] of [[137.6,36.2,1],[138.4,36.6,.8],[139.3,37.4,.7],[140.7,39.3,.9],[141.2,42.9,.8],[136.4,35.1,.5]]){
-  const c=new T.Mesh(new T.ConeGeometry(.9*s,.9*s,6),new T.MeshLambertMaterial({color:0x7da07a,flatShading:true}));
-  const p=P(lo,la,.3+.45*s);c.position.copy(p);scene.add(c);
-}
+geo.setAttribute('color',new T.BufferAttribute(col,3));geo.computeVertexNormals();
+scene.add(new T.Mesh(geo,new T.MeshLambertMaterial({vertexColors:true})));
+const sea=new T.Mesh(new T.CircleGeometry(160,64).rotateX(-Math.PI/2),new T.MeshLambertMaterial({color:0x1f62a0,transparent:true,opacity:.74}));
+sea.position.y=0;scene.add(sea);
 
-// Fuji
-const fuji=P(138.73,35.36);
-const fc=new T.Mesh(new T.ConeGeometry(1,2.2,32),new T.MeshLambertMaterial({color:0x3f5f9a}));fc.position.set(fuji.x,.85,fuji.z);scene.add(fc);
-const cap=new T.Mesh(new T.ConeGeometry(.5,.9,32),new T.MeshLambertMaterial({color:0xffffff}));cap.position.set(fuji.x,1.4,fuji.z);scene.add(cap);
-
-// cities
+// ---- cities ----
 const C={
-osaka:{n:'Osaka',jp:'大阪',d:'18–20 Jan',ll:[135.5,34.69],ox:-10,oy:95},
+osaka:{n:'Osaka',jp:'大阪',d:'18–20 Jan',ll:[135.5,34.69],ox:-6,oy:70},
 hiro:{n:'Hiroshima',jp:'広島',d:'21 Jan',ll:[132.46,34.39]},
 kyoto:{n:'Kyoto',jp:'京都',d:'21–24 Jan',ll:[135.77,35.01]},
 tokyo:{n:'Tokyo',jp:'東京',d:'24 Jan →',ll:[139.69,35.69]},
-fuji:{n:'Mt Fuji',jp:'富士山',d:'25 Jan',ll:[138.73,35.36],ox:-20,oy:95}};
-const mk=[],rings=[];
+fuji:{n:'Mt Fuji',jp:'富士山',d:'25 Jan',ll:[138.73,35.36],ox:-30,oy:70,ty:2}};
+const LB=[],rings=[];
+function lab(html,p,cls,ox,oy){const el=document.createElement('div');el.className='lbl'+(cls?' '+cls:'');el.innerHTML=html;document.body.appendChild(el);LB.push({el,p,ox:ox||0,oy:oy||0})}
 for(const k in C){
-  const c=C[k];c.p=P(...c.ll,.1);
-  const pole=new T.Mesh(new T.CylinderGeometry(.03,.03,1.4),new T.MeshBasicMaterial({color:0xc8102e}));
-  pole.position.set(c.p.x,.7,c.p.z);scene.add(pole);
-  const b=new T.Mesh(new T.SphereGeometry(.2,20,20),new T.MeshLambertMaterial({color:0xc8102e,emissive:0x800010}));
-  b.position.set(c.p.x,1.45,c.p.z);scene.add(b);
-  const r=new T.Mesh(new T.RingGeometry(.25,.32,32).rotateX(-Math.PI/2),new T.MeshBasicMaterial({color:0xff4d63,transparent:true,side:2}));
-  r.position.set(c.p.x,.07,c.p.z);scene.add(r);rings.push(r);
-  const el=document.createElement('div');el.className='lbl';
-  el.innerHTML=`<span>${c.d}</span><b>${c.n} ${c.jp}</b>`;document.body.appendChild(el);c.el=el;c.top=new T.Vector3(c.p.x,1.9,c.p.z);
+  const c=C[k];c.ty=c.ty||1.2;c.p=P(...c.ll,.1);
+  const pole=new T.Mesh(new T.CylinderGeometry(.025,.025,c.ty),new T.MeshBasicMaterial({color:0xc8102e}));
+  pole.position.set(c.p.x,c.ty/2,c.p.z);scene.add(pole);
+  const b=new T.Mesh(new T.SphereGeometry(.17,20,20),new T.MeshLambertMaterial({color:0xc8102e,emissive:0x900018}));
+  b.position.set(c.p.x,c.ty,c.p.z);scene.add(b);
+  const r=new T.Mesh(new T.RingGeometry(.22,.29,32).rotateX(-Math.PI/2),new T.MeshBasicMaterial({color:0xff4d63,transparent:true,side:2}));
+  r.position.set(c.p.x,.12,c.p.z);scene.add(r);rings.push(r);
+  lab(`<span>${c.d}</span><b>${c.n} ${c.jp}</b>`,new T.Vector3(c.p.x,c.ty+.45,c.p.z),'',c.ox,c.oy);
 }
+lab('Sea of Japan',P(134.2,39.3,.1),'sea');lab('Pacific Ocean',P(143.8,36.5,.1),'sea');
 
-// route
-const legs=[['osaka','hiro',2.2],['hiro','kyoto',2.4],['kyoto','tokyo',3],['tokyo','fuji',1.4],['fuji','tokyo',-1.2]];
-const col=[0xffd24a,0xffd24a,0xff7a8a,0xffffff,0xffffff];
-const curves=[];
+// ---- route ----
+const legs=[['osaka','hiro',2],['hiro','kyoto',2.2],['kyoto','tokyo',2.6],['tokyo','fuji',1.2],['fuji','tokyo',-1.2]];
+const lc=[0xffd24a,0xffd24a,0xff8a9a,0xffffff,0xffffff],curves=[];
 legs.forEach(([a,b,h],i)=>{
-  const A=C[a].p.clone().setY(1.45),B=C[b].p.clone().setY(1.45);
-  const M=A.clone().add(B).multiplyScalar(.5);M.y+=Math.abs(h)*1.3;
-  const side=new T.Vector3().subVectors(B,A).cross(new T.Vector3(0,1,0)).normalize().multiplyScalar(h<0?-1.1:0);M.add(side);
-  const cv=new T.QuadraticBezierCurve3(A,M,B);curves.push(cv);
-  scene.add(new T.Mesh(new T.TubeGeometry(cv,48,.06,8),new T.MeshBasicMaterial({color:col[i]})));
+  const A=C[a].p.clone().setY(C[a].ty),B=C[b].p.clone().setY(C[b].ty);
+  const M=A.clone().add(B).multiplyScalar(.5);M.y+=Math.abs(h)*1.2;
+  if(h<0)M.add(new T.Vector3().subVectors(B,A).cross(new T.Vector3(0,1,0)).normalize().multiplyScalar(-1));
+  const q=new T.QuadraticBezierCurve3(A,M,B);curves.push(q);
+  scene.add(new T.Mesh(new T.TubeGeometry(q,48,.055,8),new T.MeshBasicMaterial({color:lc[i]})));
 });
-const orb=new T.Mesh(new T.SphereGeometry(.17,16,16),new T.MeshBasicMaterial({color:0xffffff}));scene.add(orb);
-const glow=new T.PointLight(0xffd24a,1.5,6);orb.add(glow);
+const orb=new T.Mesh(new T.SphereGeometry(.16,16,16),new T.MeshBasicMaterial({color:0xffffff}));
+orb.add(new T.PointLight(0xffd24a,1.5,6));scene.add(orb);
 
-// sakura
-const N=220,pp=new Float32Array(N*3),pv=[];
-for(let i=0;i<N;i++){pp.set([(Math.random()-.5)*50,Math.random()*18,(Math.random()-.5)*40],i*3);pv.push(Math.random()*.6+.3)}
-const pg=new T.BufferGeometry();pg.setAttribute('position',new T.BufferAttribute(pp,3));
-const pts=new T.Points(pg,new T.PointsMaterial({color:0xffb7c5,size:.16,transparent:true,opacity:.9}));scene.add(pts);
+// ---- landmark icons (emerge on click) ----
+const IC={};
+const mat=(c,e=.18)=>new T.MeshLambertMaterial({color:c,emissive:c,emissiveIntensity:e});
+const add=(g,geo,c,x,y,z,ry=0)=>{const m=new T.Mesh(geo,mat(c));m.position.set(x,y,z);m.rotation.y=ry;g.add(m);return m};
+const BX=(w,h,d)=>new T.BoxGeometry(w,h,d),CN=(r,h,s=4)=>new T.ConeGeometry(r,h,s),CY=(a,b,h,s=14)=>new T.CylinderGeometry(a,b,h,s);
+function groundY(x,z){const lo=x/K+LX,la=-z/(K*LK)+LZ,i=cl(Math.round((lo-L0)/(L1-L0)*(NX-1)),0,NX-1),j=cl(Math.round((B1-la)/(B1-B0)*(NZ-1)),0,NZ-1);return Math.max(.06,pos.getY(j*NX+i))}
+const BUILD={
+osaka(){const g=new T.Group();add(g,BX(1,.3,1),0x9a9a9a,0,.15,0);
+  for(let n=0;n<3;n++){const w=.78-n*.17,y=.4+n*.3;add(g,BX(w,.2,w),0xf4f1e8,0,y,0);add(g,CN(w*.9,.14),0x2e7d6b,0,y+.17,0,Math.PI/4)}
+  add(g,CN(.14,.3),0xf2c230,0,1.34,0,Math.PI/4);return g},
+hiro(){const g=new T.Group();
+  for(const s of[-1,1])add(g,CY(.05,.065,.9),0xd8341f,s*.36,.45,0);
+  add(g,BX(1.15,.08,.16),0x2a2a2a,0,.97,0);add(g,BX(1.0,.07,.11),0xd8341f,0,.9,0);add(g,BX(.78,.05,.08),0xd8341f,0,.66,0);add(g,BX(.08,.2,.06),0xd8341f,0,.78,0);return g},
+kyoto(){const g=new T.Group();
+  for(let n=0;n<5;n++){const w=.62-n*.08,y=.1+n*.28;add(g,BX(w*.8,.18,w*.8),0xb5342b,0,y,0);add(g,CN(w*.95,.13),0x3a2f2a,0,y+.15,0,Math.PI/4)}
+  add(g,CY(.015,.015,.45,8),0xf2c230,0,1.45,0);return g},
+tokyo(){const g=new T.Group(),S=0x3b4a45,SP=new T.SphereGeometry(1,16,12);
+  const sp=(c,x,y,z,sx,sy,sz)=>{const m=add(g,SP,c,x,y,z);m.scale.set(sx,sy,sz);return m};
+  sp(S,0,.85,0,.3,.45,.27);sp(S,0,1.3,.03,.17,.17,.17);sp(S,0,1.5,.1,.2,.18,.24);
+  add(g,BX(.2,.05,.24),0x2c3834,0,1.4,.2);
+  for(const s of[-1,1]){sp(0xffe45c,s*.09,1.55,.26,.035,.035,.035);
+    add(g,CY(.11,.14,.5),S,s*.14,.25,0);add(g,BX(.2,.07,.3),0x2c3834,s*.14,.04,.06);
+    const a=add(g,CY(.035,.05,.28),S,s*.3,1.0,.14);a.rotation.x=-.7}
+  for(let i=0;i<6;i++){const r=.2-.028*i,m=add(g,CY(r,r-.028,.3,10),S,0,.55-.08*i,-.3-.22*i);m.rotation.x=Math.PI/2}
+  const tip=add(g,CN(.05,.3,8),S,0,.1,-1.55);tip.rotation.x=-Math.PI/2;
+  for(let i=0;i<7;i++){const m=add(g,CN(.09-.008*i,.24-.02*i,4),0xbfe6ff,0,1.32-.1*i,-.14-.1*i-(i>4?.1*(i-4):0),Math.PI/4);m.rotation.x=-.5;m.material.emissiveIntensity=.9}
+  return g},
+fuji(){const g=new T.Group();
+  add(g,CN(.6,1,32),0x3f5f9a,0,.5,0,0);add(g,CN(.24,.4,32),0xffffff,0,.85,0,0);
+  add(g,new T.SphereGeometry(.2,20,20),0xc8102e,.5,1.05,-.3);return g}};
+const CFG={osaka:[-.55,.45,.8],hiro:[-.2,.7,.85],kyoto:[.5,-.5,.75],tokyo:[.55,-.5,.8],fuji:[-1,-.7,1]};
+for(const k in CFG){
+  const [dx,dz,sc]=CFG[k],o=new T.Group(),inner=BUILD[k]();inner.scale.setScalar(sc);o.add(inner);
+  o.position.set(C[k].p.x+dx,groundY(C[k].p.x+dx,C[k].p.z+dz),C[k].p.z+dz);o.visible=false;o.scale.setScalar(.001);scene.add(o);
+  IC[k]={g:o,y:o.position.y,on:false,t0:0};
+}
+function reveal(k){const o=IC[k];if(!o)return;o.on=true;o.g.visible=true;o.t0=clock.elapsedTime}
+// ---- sakura ----
+const N=innerWidth<700?90:180,pg=new T.BufferGeometry(),pa=new Float32Array(N*3),pv=[];
+for(let i=0;i<N;i++){pa.set([(Math.random()-.5)*50,Math.random()*16,(Math.random()-.5)*40],i*3);pv.push(Math.random()*.6+.3)}
+pg.setAttribute('position',new T.BufferAttribute(pa,3));
+scene.add(new T.Points(pg,new T.PointsMaterial({color:0xffb7c5,size:.14,transparent:true,opacity:.9})));
 
-// orbit camera
-let th=.15,ph=.85,dist=38,tgt=new T.Vector3(1,0,-3),gT=tgt.clone(),gD=dist;
+// ---- camera ----
+const mob=()=>innerWidth<700;
+let th=.15,ph=.9,dist=mob()?62:40,tgt=new T.Vector3(1.5,0,-3),gT=tgt.clone(),gD=dist;
+const maxD=85,minD=6;
 function placeCam(){cam.position.set(tgt.x+dist*Math.sin(ph)*Math.sin(th),tgt.y+dist*Math.cos(ph),tgt.z+dist*Math.sin(ph)*Math.cos(th));cam.lookAt(tgt)}
 const cv=renderer.domElement;let drag=null,pinch=0;
 cv.addEventListener('pointerdown',e=>{drag=[e.clientX,e.clientY];cv.setPointerCapture(e.pointerId)});
-cv.addEventListener('pointermove',e=>{if(!drag)return;th-=(e.clientX-drag[0])*.007;ph=Math.min(1.45,Math.max(.2,ph-(e.clientY-drag[1])*.006));drag=[e.clientX,e.clientY]});
-cv.addEventListener('pointerup',()=>drag=null);
-cv.addEventListener('wheel',e=>{e.preventDefault();gD=Math.min(60,Math.max(7,gD*(1+e.deltaY*.001)))},{passive:false});
-cv.addEventListener('touchmove',e=>{if(e.touches.length===2){const d=Math.hypot(e.touches[0].clientX-e.touches[1].clientX,e.touches[0].clientY-e.touches[1].clientY);if(pinch)gD=Math.min(60,Math.max(7,gD*pinch/d));pinch=d}},{passive:true});
-cv.addEventListener('touchend',()=>pinch=0);
+cv.addEventListener('pointermove',e=>{if(!drag||pinch)return;th-=(e.clientX-drag[0])*.007;ph=cl(ph-(e.clientY-drag[1])*.006,.2,1.45);drag=[e.clientX,e.clientY]});
+cv.addEventListener('pointerup',()=>drag=null);cv.addEventListener('pointercancel',()=>drag=null);
+cv.addEventListener('wheel',e=>{e.preventDefault();gD=cl(gD*(1+e.deltaY*.001),minD,maxD)},{passive:false});
+cv.addEventListener('touchmove',e=>{if(e.touches.length===2){const d=Math.hypot(e.touches[0].clientX-e.touches[1].clientX,e.touches[0].clientY-e.touches[1].clientY);if(pinch){gD=cl(gD*pinch/d,minD,maxD);dist=gD}pinch=d}},{passive:true});
+cv.addEventListener('touchend',e=>{if(e.touches.length<2)pinch=0});
 
-// itinerary panel
+// ---- itinerary ----
 const stops=[
-['osaka','Osaka','18–20 Jan','Arrive 2:00 PM on the 18th. Three days of food, castle and neon.',12],
-['hiro','Hiroshima','21 Jan','Day trip on the Sanyo Shinkansen, then on to Kyoto.',12],
-['kyoto','Kyoto','21–24 Jan','Overnight on the 21st, then three days of temples and gardens.',10],
-['tokyo','Tokyo','24 Jan','Shinkansen from Kyoto to Tokyo.',12],
-['fuji','Mt Fuji','25 Jan','Day trip to the iconic volcano.',9],
-['tokyo','Tokyo','25 Jan onwards','The remaining 9 days exploring Tokyo!',10]];
+['osaka','Osaka','18–20 Jan','Arrive 2:00 PM on the 18th. Three days of food, castle and neon.',13],
+['hiro','Hiroshima','21 Jan','Day trip on the Sanyo Shinkansen, then on to Kyoto.',13],
+['kyoto','Kyoto','21–24 Jan','Overnight on the 21st, then three days of temples and gardens.',11],
+['tokyo','Tokyo','24 Jan','Shinkansen from Kyoto to Tokyo.',13],
+['fuji','Mt Fuji','25 Jan','Day trip to the iconic volcano.',10],
+['tokyo','Tokyo','25 Jan onwards','The remaining 9 days exploring Tokyo!',11]];
 const list=document.getElementById('list');
 stops.forEach((s,i)=>{
   const b=document.createElement('button');b.className='st';
   b.innerHTML=`<div class="n">${i+1}</div><div><h3>${s[1]} · ${s[2]}</h3><small>${s[3]}</small></div>`;
-  b.onclick=()=>{document.querySelectorAll('.st').forEach(x=>x.classList.remove('on'));b.classList.add('on');gT=C[s[0]].p.clone().setY(0);gD=s[4]};
+  b.onclick=()=>{reveal(s[0]);document.querySelectorAll('.st').forEach(x=>x.classList.remove('on'));b.classList.add('on');gT=C[s[0]].p.clone().setY(0);gD=mob()?s[4]*1.5:s[4];if(mob())b.scrollIntoView({behavior:'smooth',inline:'center',block:'nearest'})};
   list.appendChild(b);
 });
 
-function resize(){renderer.setSize(innerWidth,innerHeight);cam.aspect=innerWidth/innerHeight;cam.updateProjectionMatrix()}
+function resize(){renderer.setSize(innerWidth,innerHeight);cam.aspect=innerWidth/innerHeight;
+  if(mob())cam.setViewOffset(innerWidth,innerHeight,0,innerHeight*.1,innerWidth,innerHeight);else cam.clearViewOffset();
+  cam.updateProjectionMatrix()}
 addEventListener('resize',resize);resize();
 
 const clock=new T.Clock();let u=0;
 function loop(){
-  const dt=clock.getDelta(),t=clock.elapsedTime;
+  const dt=Math.min(clock.getDelta(),.05),t=clock.elapsedTime;
   tgt.lerp(gT,.06);dist+=(gD-dist)*.06;
   if(!drag)th+=dt*.02;
   placeCam();
-  // orb travels along whole route
   u=(u+dt*.12)%legs.length;const i=Math.floor(u);orb.position.copy(curves[i].getPoint(u-i));
-  rings.forEach((r,k)=>{const s=1+((t*.8+k*.3)%1)*1.6;r.scale.set(s,1,s);r.material.opacity=1-((t*.8+k*.3)%1)});
+  rings.forEach((r,k)=>{const f=(t*.8+k*.3)%1;r.scale.set(1+f*1.6,1,1+f*1.6);r.material.opacity=1-f});
+  for(const k in IC){const o=IC[k];if(!o.on)continue;const f=cl((t-o.t0)/.9,0,1),s=1+2.70158*Math.pow(f-1,3)+1.70158*Math.pow(f-1,2);
+    o.g.scale.setScalar(Math.max(s,.001));o.g.position.y=o.y-(1-f)*.5;o.g.rotation.y=(1-f)*-2.5+Math.sin(t*.6)*.12}
   const a=pg.attributes.position;
-  for(let j=0;j<N;j++){let y=a.getY(j)-pv[j]*dt;if(y<0)y=18;a.setY(j,y);a.setX(j,a.getX(j)+Math.sin(t+j)*.004)}
+  for(let j=0;j<N;j++){let y=a.getY(j)-pv[j]*dt;if(y<0)y=16;a.setY(j,y);a.setX(j,a.getX(j)+Math.sin(t+j)*.004)}
   a.needsUpdate=true;
-  for(const k in C){const c=C[k],v=c.top.clone().project(cam);
-    c.el.style.transform=`translate(${(v.x*.5+.5)*innerWidth+(c.ox||0)}px,${(-v.y*.5+.5)*innerHeight+(c.oy||0)}px) translate(-50%,-130%)`;
-    c.el.style.display=v.z<1?'block':'none'}
+  for(const l of LB){const v=l.p.clone().project(cam);
+    l.el.style.transform=`translate(${(v.x*.5+.5)*innerWidth+l.ox}px,${(-v.y*.5+.5)*innerHeight+l.oy}px) translate(-50%,-130%)`;
+    l.el.style.display=v.z<1?'block':'none'}
   renderer.render(scene,cam);requestAnimationFrame(loop);
 }
 loop();
+const ld=document.getElementById('load');ld.style.opacity=0;setTimeout(()=>ld.remove(),700);
 </script>
 </body>
 </html>
